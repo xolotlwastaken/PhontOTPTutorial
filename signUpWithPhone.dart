@@ -10,16 +10,26 @@ import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future signUpWithPhone(
+Future<String?> signUpWithPhone(
   String phone,
   String password,
+  String confirmPassword,
 ) async {
   // Add your function code here!
   // Get a reference your Supabase client
   final supabase = Supabase.instance.client;
 
-  await supabase.auth.signUp(
-    phone: phone,
-    password: password,
-  );
+  if (confirmPassword == password) {
+    try {
+      await supabase.auth.signUp(
+        phone: phone,
+        password: password,
+      );
+      return (null);
+    } on AuthException catch (e) {
+      return (e.message);
+    }
+  } else {
+    return ('Passwords do not match. Please try again.');
+  }
 }
