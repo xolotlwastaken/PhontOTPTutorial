@@ -10,24 +10,15 @@ import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<bool> signUpWithPhone(String phone, password) async {
+Future signUpWithPhone(String phone, password) async {
 // Add your function code here!
 
   // Get a reference your Supabase client
   final supabase = Supabase.instance.client;
 
   
-  final AuthResponse res = await supabase.auth.signUp(
+  await supabase.auth.signUp(
     phone: phone,
     password: password,
   );
-
-  final Session? session = res.session;
-
-  if (session != null) {
-    return true;
-  }
-  else {
-    return false;
-  }
 }
